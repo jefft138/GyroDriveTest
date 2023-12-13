@@ -93,7 +93,6 @@ public class RobotContainer {
    * @return the command to run in autonomous
    */
   public Command getAutonomousCommand() {
-    // no auto
     // TODO: We need an auto
     return new InstantCommand();
   }

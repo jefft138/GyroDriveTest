@@ -19,7 +19,6 @@ public class TurnToAngle extends PIDCommand {
    */
   public TurnToAngle(double targetAngleDegrees, DriveSubsystem drive) {
     super(
-      //TODO: reduce kTurnP
         new PIDController(DriveConstants.kTurnP, DriveConstants.kTurnI, DriveConstants.kTurnD),
         // Close loop on heading
         drive::getHeading,
