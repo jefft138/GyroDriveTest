@@ -95,6 +95,6 @@ public class RobotContainer {
   public Command getAutonomousCommand() {
     // no auto
     // TODO: We need an auto
-    return new InstantCommand();
-  }
+    return new RunCommand(() -> new TurnToAngle(90, m_robotDrive.withTimeout(5)));
+}
 }
