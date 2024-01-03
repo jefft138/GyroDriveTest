@@ -80,7 +80,7 @@ public class RobotContainer {
 
     // Turn to 90 degrees when the 'X' button is pressed, with a 5 second timeout
     new JoystickButton(m_driverController, Button.kCross.value)
-        .onTrue(new TurnToAngle(90, m_robotDrive).withTimeout(5));
+        .onTrue(new TurnToAngle(90, m_robotDrive).withTimeout(10));
 
     // Turn to -90 degrees with a profile when the Circle button is pressed, with a 5 second timeout
     new JoystickButton(m_driverController, Button.kCircle.value)
@@ -93,8 +93,7 @@ public class RobotContainer {
    * @return the command to run in autonomous
    */
   public Command getAutonomousCommand() {
-    // no auto
-    // TODO: We need an auto
-    return new RunCommand(() -> new TurnToAngle(90, m_robotDrive.withTimeout(5)));
-}
+
+    return new TurnToAngleProfiled(90, m_robotDrive).withTimeout(10);  
+  }
 }

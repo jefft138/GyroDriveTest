@@ -8,9 +8,12 @@ import edu.wpi.first.math.controller.PIDController;
 import frc.robot.Constants.DriveConstants;
 import frc.robot.subsystems.DriveSubsystem;
 import edu.wpi.first.wpilibj2.command.PIDCommand;
+import edu.wpi.first.wpilibj2.command.Subsystem;
 
 /** A command that will turn the robot to the specified angle. */
 public class TurnToAngle extends PIDCommand {
+  DriveSubsystem m_drive; 
+
   /**
    * Turns to robot to the specified angle.
    *
@@ -19,7 +22,6 @@ public class TurnToAngle extends PIDCommand {
    */
   public TurnToAngle(double targetAngleDegrees, DriveSubsystem drive) {
     super(
-      //TODO: reduce kTurnP
         new PIDController(DriveConstants.kTurnP, DriveConstants.kTurnI, DriveConstants.kTurnD),
         // Close loop on heading
         drive::getHeading,
@@ -29,6 +31,10 @@ public class TurnToAngle extends PIDCommand {
         output -> drive.arcadeDrive(0, output),
         // Require the drive
         drive);
+
+    m_drive = drive; 
+
+    System.out.println("Target Angle: " + targetAngleDegrees);
 
     // Set the controller to be continuous (because it is an angle controller)
     getController().enableContinuousInput(-180, 180);
@@ -41,6 +47,9 @@ public class TurnToAngle extends PIDCommand {
   @Override
   public boolean isFinished() {
     // End when the controller is at the reference.
-    return getController().atSetpoint();
+    boolean atSetpoint = getController().atSetpoint();
+    System.out.println("Heading: " + m_drive.getHeading());
+    System.out.println("At Setpoint? " + atSetpoint);
+    return atSetpoint; 
   }
 }
