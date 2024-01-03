@@ -33,7 +33,8 @@ public class TurnToAngleProfiled extends ProfiledPIDCommand {
         // Set reference to target
         targetAngleDegrees,
         // Pipe output to turn robot
-        (output, setpoint) -> drive.arcadeDrive(0, MathUtil.clamp(output, -0.2, 0.2)),
+        (output, setpoint) -> drive.arcadeDrive(0, output),
+        // (output, setpoint) -> drive.arcadeDrive(0, MathUtil.clamp(output, -0.3, 0.3)),
         // Require the drive
         drive);
 
@@ -44,6 +45,15 @@ public class TurnToAngleProfiled extends ProfiledPIDCommand {
     getController()
         .setTolerance(DriveConstants.kTurnToleranceDeg, DriveConstants.kTurnRateToleranceDegPerS);
   }
+// TODO fix calculation 
+// initial angle starts at 0 and decreases negatively until 180 
+  @Override 
+  public void execute() { 
+    System.out.println("Measurement:" + m_measurement.getAsDouble());
+    System.out.println("Output:" + m_controller.calculate(m_measurement.getAsDouble(), m_goal.get()));
+    super.execute();
+  }
+  
 
   @Override
   public boolean isFinished() {
